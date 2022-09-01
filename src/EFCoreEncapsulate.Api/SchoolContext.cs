@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace EFCoreEncapsulation.Api;
+namespace EFCoreEncapsulate.Api;
 
 public sealed class SchoolContext : DbContext
 {

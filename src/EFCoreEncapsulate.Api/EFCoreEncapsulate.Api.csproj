@@ -3,8 +3,8 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <AssemblyName>EFCoreEncapsulation.Api</AssemblyName>
-    <RootNamespace>EFCoreEncapsulation.Api</RootNamespace>
+    <AssemblyName>EFCoreEncapsulate.Api</AssemblyName>
+    <RootNamespace>EFCoreEncapsulate.Api</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

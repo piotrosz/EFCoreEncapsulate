@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace EFCoreEncapsulation.Api;
+namespace EFCoreEncapsulate.Api;
 
 [ApiController]
 [Route("students")]

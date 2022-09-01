@@ -1,4 +1,4 @@
-﻿namespace EFCoreEncapsulation.Api;
+﻿namespace EFCoreEncapsulate.Api;
 
 public class Enrollment
 {

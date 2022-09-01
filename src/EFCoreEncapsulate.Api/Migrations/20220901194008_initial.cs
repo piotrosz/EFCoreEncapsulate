@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace EFCoreEncapsulation.Api.Migrations
+namespace EFCoreEncapsulate.Api.Migrations
 {
     public partial class initial : Migration
     {

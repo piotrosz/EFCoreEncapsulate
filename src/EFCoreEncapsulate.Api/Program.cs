@@ -1,4 +1,4 @@
-using EFCoreEncapsulation.Api;
+using EFCoreEncapsulate.Api;
 
 var builder = WebApplication.CreateBuilder(args);
 
