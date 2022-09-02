@@ -1,4 +1,3 @@
-using EFCoreEncapsulate.Api;
 using EFCoreEncapsulate.Data;
 
 var builder = WebApplication.CreateBuilder(args);

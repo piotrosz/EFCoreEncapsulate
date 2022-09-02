@@ -13,6 +13,7 @@ public sealed class SchoolContext : DbContext
     public DbSet<Course> Courses { get; set; }
     public DbSet<Enrollment> Enrollments { get; set; }
 
+    // This is a way to encapsulate DbContext (reduce number of possible config options, keeping invariants)
     public SchoolContext(string connectionString, bool useConsoleLogger)
     {
         _connectionString = connectionString;
@@ -55,15 +56,15 @@ public sealed class SchoolContext : DbContext
         {
             x.ToTable("Student").HasKey(k => k.Id);
             x.Property(p => p.Id).HasColumnName("StudentID");
-            x.Property(p => p.Email);
-            x.Property(p => p.Name);
+            x.Property(p => p.Email).HasMaxLength(200);
+            x.Property(p => p.Name).HasMaxLength(200);
             x.HasMany(p => p.Enrollments).WithOne(p => p.Student);
         });
         modelBuilder.Entity<Course>(x =>
         {
             x.ToTable("Course").HasKey(k => k.Id);
             x.Property(p => p.Id).HasColumnName("CourseID");
-            x.Property(p => p.Name);
+            x.Property(p => p.Name).HasMaxLength(200);;
         });
         modelBuilder.Entity<Enrollment>(x =>
         {
@@ -74,7 +75,17 @@ public sealed class SchoolContext : DbContext
             x.Property(p => p.Grade);
         });
 
-        // TODO: Seed data
-        //modelBuilder.Entity<Student>().HasData(new Student())
+        // Seeding data
+        modelBuilder.Entity<Student>().HasData(new Student {
+            Id = 1,
+            Email = "bob@bob.pl",
+            Name = "Bob"
+        });
+
+        modelBuilder.Entity<Student>().HasData(new Student {
+            Id = 2,
+            Email = "alice@alice.com",
+            Name = "Alice"
+        });
     }
 }
