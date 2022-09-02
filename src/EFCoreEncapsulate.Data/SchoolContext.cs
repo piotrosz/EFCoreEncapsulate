@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EFCoreEncapsulate.Model;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
-namespace EFCoreEncapsulate.Api;
+namespace EFCoreEncapsulate.Data;
 
 public sealed class SchoolContext : DbContext
 {
@@ -11,7 +13,7 @@ public sealed class SchoolContext : DbContext
     public DbSet<Course> Courses { get; set; }
     public DbSet<Enrollment> Enrollments { get; set; }
 
-       public SchoolContext(string connectionString, bool useConsoleLogger)
+    public SchoolContext(string connectionString, bool useConsoleLogger)
     {
         _connectionString = connectionString;
         _useConsoleLogger = useConsoleLogger;

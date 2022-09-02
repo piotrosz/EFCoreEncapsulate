@@ -1,3 +1,5 @@
+using EFCoreEncapsulate.Data;
+using EFCoreEncapsulate.Model;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EFCoreEncapsulate.Api;

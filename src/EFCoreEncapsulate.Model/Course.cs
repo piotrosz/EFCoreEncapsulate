@@ -1,4 +1,4 @@
-﻿namespace EFCoreEncapsulate.Api;
+﻿namespace EFCoreEncapsulate.Model;
 
 public class Course
 {
