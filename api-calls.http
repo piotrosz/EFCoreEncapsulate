@@ -1,0 +1,2 @@
+
+GET http://localhost:5055/students/1 HTTP/1.1
