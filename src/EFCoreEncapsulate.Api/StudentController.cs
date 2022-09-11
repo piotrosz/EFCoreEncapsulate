@@ -8,23 +8,34 @@ namespace EFCoreEncapsulate.Api;
 [Route("students")]
 public class StudentController : ControllerBase
 {
-    private readonly SchoolContext _context;
+    //private readonly SchoolContext _context;
+    private readonly StudentRepository _studentRepository;
 
-    public StudentController(SchoolContext context)
+    public StudentController(StudentRepository studentRepository)
     {
-        _context = context;
+        _studentRepository = studentRepository;
     }
 
     [HttpGet("{id}")]
     public StudentDto Get(long id)
     {
-        Student student = _context.Students.Find(id);
+        Student student = _studentRepository.GetByIdOrNull(id);
+
+        if (student == null)
+        {
+            return null;
+        }
 
         return new StudentDto
         {
             StudentId = student.Id,
             Name = student.Name,
-            Email = student.Email
+            Email = student.Email,
+            Enrollments = student.Enrollments.Select(x => new EnrollmentDto
+            {
+                Course = x.Course.Name,
+                Grade = x.Grade.ToString()
+            }).ToList()
         };
     }
 }

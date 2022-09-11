@@ -59,6 +59,10 @@ public sealed class SchoolContext : DbContext
             x.Property(p => p.Email).HasMaxLength(200);
             x.Property(p => p.Name).HasMaxLength(200);
             x.HasMany(p => p.Enrollments).WithOne(p => p.Student);
+
+            // New auto include feature
+            x.Navigation(p => p.Enrollments).AutoInclude();
+
         });
         modelBuilder.Entity<Course>(x =>
         {
@@ -73,6 +77,9 @@ public sealed class SchoolContext : DbContext
             x.HasOne(p => p.Student).WithMany(p => p.Enrollments);
             x.HasOne(p => p.Course).WithMany();
             x.Property(p => p.Grade);
+
+            // New auto include feature
+            x.Navigation(p => p.Course).AutoInclude();
         });
 
         // Seeding data
