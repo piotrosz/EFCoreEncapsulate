@@ -11,7 +11,12 @@ public sealed class SchoolContext : DbContext
 
     public DbSet<Student> Students { get; set; }
     public DbSet<Course> Courses { get; set; }
-    public DbSet<Enrollment> Enrollments { get; set; }
+
+    public DbSet<Course> Sports { get; set; }
+
+    public DbSet<CourseEnrollment> CourseEnrollments { get; set; }
+
+    public DbSet<SportEnrollment> SportEnrollments { get; set; }
 
     // This is a way to encapsulate DbContext (reduce number of possible config options, keeping invariants)
     public SchoolContext(string connectionString, bool useConsoleLogger)
@@ -58,10 +63,12 @@ public sealed class SchoolContext : DbContext
             x.Property(p => p.Id).HasColumnName("StudentID");
             x.Property(p => p.Email).HasMaxLength(200);
             x.Property(p => p.Name).HasMaxLength(200);
-            x.HasMany(p => p.Enrollments).WithOne(p => p.Student);
+            x.HasMany(p => p.CourseEnrollments).WithOne(p => p.Student);
+            x.HasMany(p => p.SportEnrollments).WithOne(p => p.Student);
 
             // New auto include feature
-            x.Navigation(p => p.Enrollments).AutoInclude();
+            x.Navigation(p => p.CourseEnrollments).AutoInclude();
+            x.Navigation(p => p.SportEnrollments).AutoInclude();
 
         });
         modelBuilder.Entity<Course>(x =>
@@ -70,11 +77,11 @@ public sealed class SchoolContext : DbContext
             x.Property(p => p.Id).HasColumnName("CourseID");
             x.Property(p => p.Name).HasMaxLength(200);;
         });
-        modelBuilder.Entity<Enrollment>(x =>
+        modelBuilder.Entity<CourseEnrollment>(x =>
         {
-            x.ToTable("Enrollment").HasKey(k => k.Id);
-            x.Property(p => p.Id).HasColumnName("EnrollmentID");
-            x.HasOne(p => p.Student).WithMany(p => p.Enrollments);
+            x.ToTable("CourseEnrollment").HasKey(k => k.Id);
+            x.Property(p => p.Id).HasColumnName("CourseEnrollmentID");
+            x.HasOne(p => p.Student).WithMany(p => p.CourseEnrollments);
             x.HasOne(p => p.Course).WithMany();
             x.Property(p => p.Grade);
 
@@ -82,17 +89,103 @@ public sealed class SchoolContext : DbContext
             x.Navigation(p => p.Course).AutoInclude();
         });
 
+        modelBuilder.Entity<SportEnrollment>(x =>
+        {
+            x.ToTable("SportEnrollment").HasKey(k => k.Id);
+            x.Property(p => p.Id).HasColumnName("SportEnrollmentID");
+            x.HasOne(p => p.Student).WithMany(p => p.SportEnrollments);
+            x.HasOne(p => p.Sport).WithMany();
+            x.Property(p => p.Grade);
+
+            // New auto include feature
+            x.Navigation(p => p.Course).AutoInclude();
+        });
+
         // Seeding data
-        modelBuilder.Entity<Student>().HasData(new Student {
+        var bob = new Student 
+        {
             Id = 1,
             Email = "bob@bob.pl",
             Name = "Bob"
-        });
+        };
 
-        modelBuilder.Entity<Student>().HasData(new Student {
+        var alice = new Student 
+        {
             Id = 2,
             Email = "alice@alice.com",
             Name = "Alice"
-        });
+        };
+
+        modelBuilder.Entity<Student>().HasData(bob, alice);
+
+        var physics = new Course 
+        {
+            Id = 1,
+            Name = "Physics"
+        };
+
+        var mathematics = new Course 
+        {
+            Id = 2,
+            Name = "Mathematics"
+        };
+
+        modelBuilder.Entity<Course>().HasData(
+            physics, 
+            mathematics);
+
+        modelBuilder.Entity<CourseEnrollment>().HasData(
+            new CourseEnrollment
+            {
+                Id = 1,
+                Grade = Grade.B,
+                Course = physics,
+                Student = bob  
+            },
+            new CourseEnrollment
+            {
+                Id = 2,
+                Grade = Grade.A,
+                Course = mathematics,
+                Student = alice
+            },
+            new CourseEnrollment
+            {
+                Id = 1,
+                Grade = Grade.A,
+                Course = physics,
+                Student = alice
+            }
+        );
+
+        var swimming = new Sport 
+        {
+            Id = 1,
+            Name = "Swimming"
+        };
+
+        var basketball = new Sport 
+        {
+            Id = 2,
+            Name = "Basketball"
+        };
+
+        modelBuilder.Entity<SportEnrollment>().HasData(
+            new SportEnrollment 
+            {
+                Id = 1, 
+                Grade = Grade.C,
+                Sport = swimming,
+                Student = alice
+            },
+            new SportEnrollment 
+            {
+                Id = 2, 
+                Grade = Grade.D,
+                Sport = basketball,
+                Student = bob
+            }
+            
+        );
     }
 }
