@@ -140,22 +140,22 @@ public sealed class SchoolContext : DbContext
             {
                 Id = 1,
                 Grade = Grade.B,
-                Course = physics,
-                Student = bob  
+                CourseId = physics.Id,
+                StudentId = bob.Id,
             },
             new CourseEnrollment
             {
                 Id = 2,
                 Grade = Grade.A,
-                Course = mathematics,
-                Student = alice
+                CourseId = mathematics.Id,
+                StudentId = alice.Id,
             },
             new CourseEnrollment
             {
                 Id = 3,
                 Grade = Grade.A,
-                Course = physics,
-                Student = alice
+                CourseId = physics.Id,
+                StudentId = alice.Id,
             }
         );
 
@@ -171,22 +171,27 @@ public sealed class SchoolContext : DbContext
             Name = "Basketball"
         };
 
+        
+        modelBuilder.Entity<Sport>().HasData(
+            swimming, 
+            basketball);
+
+
         modelBuilder.Entity<SportEnrollment>().HasData(
             new SportEnrollment 
             {
                 Id = 1, 
                 Grade = Grade.C,
-                Sport = swimming,
-                Student = alice
+                SportId = swimming.Id,
+                StudentId = alice.Id
             },
             new SportEnrollment 
             {
                 Id = 2, 
                 Grade = Grade.D,
-                Sport = basketball,
-                Student = bob
+                SportId = basketball.Id,
+                StudentId = bob.Id
             }
-            
         );
     }
 }
