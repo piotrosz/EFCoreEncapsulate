@@ -76,16 +76,60 @@ public sealed class SchoolContext : DbContext
         });
 
         // Seeding data
-        modelBuilder.Entity<Student>().HasData(new Student {
+        var bob = new Student 
+        {
             Id = 1,
             Email = "bob@bob.pl",
             Name = "Bob"
-        });
+        };
 
-        modelBuilder.Entity<Student>().HasData(new Student {
+        var alice = new Student 
+        {
             Id = 2,
             Email = "alice@alice.com",
             Name = "Alice"
-        });
+        };
+
+        modelBuilder.Entity<Student>().HasData(bob, alice);
+
+        var physics = new Course 
+        {
+            Id = 1,
+            Name = "Physics"
+        };
+
+        var mathematics = new Course 
+        {
+            Id = 2,
+            Name = "Mathematics"
+        };
+
+        modelBuilder.Entity<Course>().HasData(
+            physics, 
+            mathematics);
+
+        modelBuilder.Entity<Enrollment>().HasData(
+            new Enrollment
+            {
+                Id = 1,
+                Grade = Grade.B,
+                Course = physics,
+                Student = bob  
+            },
+            new Enrollment
+            {
+                Id = 2,
+                Grade = Grade.A,
+                Course = mathematics,
+                Student = alice
+            },
+            new Enrollment
+            {
+                Id = 1,
+                Grade = Grade.A,
+                Course = physics,
+                Student = alice
+            }
+        );
     }
 }
