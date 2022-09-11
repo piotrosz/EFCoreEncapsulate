@@ -1,8 +1,7 @@
 namespace EFCoreEncapsulate.Model;
 
-public class SportEnrollment
+public class SportEnrollment : Entity
 {
-    public long Id { get; set; }
     public Grade Grade { get; set; }
 
     public long SportId { get; set; }

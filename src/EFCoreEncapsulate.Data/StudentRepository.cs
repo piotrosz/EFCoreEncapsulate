@@ -20,8 +20,8 @@ namespace EFCoreEncapsulate.Data
             return _schoolContext.Students.Find(id);
         }
 
-        // Avoiding Cartesian explosion by using AsSplitQuery() (first approach)
-        public Student? GetByIdSplitQueries(long id)
+        // Avoiding Cartesian explosion by using AsSplitQuery() and no AutoInclude (first approach)
+        public Student? GetByIdOrNull_SplitQueries(long id)
         {
             return _schoolContext.Students
                 .Include(x => x.CourseEnrollments)
@@ -32,9 +32,9 @@ namespace EFCoreEncapsulate.Data
                 .SingleOrDefault(x => x.Id == id);
         }
 
-        // Avoiding Cartesian explosion by explicitly loading related collections
-
-        public Student GetByIdOrNull_AvoidCartesianExplosion(long id)
+        // Avoiding Cartesian explosion by explicitly loading related collections and no AutoInclude (second approach)
+        // Produces cleaner SQL queries than AsSplitQuery
+        public Student? GetByIdOrNull_ExplicitLoading(long id)
         {
             Student? student = _schoolContext.Set<Student>().Find(id);
 

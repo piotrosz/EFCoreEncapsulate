@@ -1,8 +1,7 @@
 ﻿namespace EFCoreEncapsulate.Model;
 
-public class CourseEnrollment
+public class CourseEnrollment : Entity
 {
-    public long Id { get; set; }
     public Grade Grade { get; set; }
 
     public virtual long CourseId { get; set; }
