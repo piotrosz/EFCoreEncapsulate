@@ -31,9 +31,14 @@ public class StudentController : ControllerBase
             StudentId = student.Id,
             Name = student.Name,
             Email = student.Email,
-            Enrollments = student.Enrollments.Select(x => new EnrollmentDto
+            CourseEnrollments = student.CourseEnrollments.Select(x => new CourseEnrollmentDto
             {
                 Course = x.Course.Name,
+                Grade = x.Grade.ToString()
+            }).ToList(),
+            SportEnrollments = student.SportEnrollments.Select(x => new SportEnrollmentDto
+            {
+                Sport = x.Sport.Name,
                 Grade = x.Grade.ToString()
             }).ToList()
         };

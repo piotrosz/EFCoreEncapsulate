@@ -1,7 +1,7 @@
 ﻿namespace EFCoreEncapsulate.Api;
 
-public class EnrollmentDto
+public class SportEnrollmentDto
 {
     public string Grade { get; set; }
-    public string Course { get; set; }
+    public string Sport { get; set; }
 }

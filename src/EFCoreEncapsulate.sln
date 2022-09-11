@@ -8,11 +8,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{07200D89-9D28-4C87-9781-EE45100CBDA7}"
 	ProjectSection(SolutionItems) = preProject
 		..\.gitignore = ..\.gitignore
+		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFCoreEncapsulate.Model", "EFCoreEncapsulate.Model\EFCoreEncapsulate.Model.csproj", "{3610E148-2DA5-49BC-8E52-0AC3E6534447}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EFCoreEncapsulate.Model", "EFCoreEncapsulate.Model\EFCoreEncapsulate.Model.csproj", "{3610E148-2DA5-49BC-8E52-0AC3E6534447}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFCoreEncapsulate.Data", "EFCoreEncapsulate.Data\EFCoreEncapsulate.Data.csproj", "{061A1FA2-190F-4078-9510-0EAC1E6E71C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EFCoreEncapsulate.Data", "EFCoreEncapsulate.Data\EFCoreEncapsulate.Data.csproj", "{061A1FA2-190F-4078-9510-0EAC1E6E71C7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -6,5 +6,6 @@ public class StudentDto
     public string Name { get; set; }
     public string Email { get; set; }
 
-    public List<EnrollmentDto> Enrollments { get; set; }
+    public List<CourseEnrollmentDto> CourseEnrollments { get; set; }
+    public List<SportEnrollmentDto> SportEnrollments { get; set; }
 }

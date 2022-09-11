@@ -10,6 +10,7 @@ public sealed class SchoolContext : DbContext
     private readonly bool _useConsoleLogger;
 
     public DbSet<Student> Students { get; set; }
+
     public DbSet<Course> Courses { get; set; }
 
     public DbSet<Course> Sports { get; set; }
@@ -98,7 +99,7 @@ public sealed class SchoolContext : DbContext
             x.Property(p => p.Grade);
 
             // New auto include feature
-            x.Navigation(p => p.Course).AutoInclude();
+            x.Navigation(p => p.Sport).AutoInclude();
         });
 
         // Seeding data
@@ -151,7 +152,7 @@ public sealed class SchoolContext : DbContext
             },
             new CourseEnrollment
             {
-                Id = 1,
+                Id = 3,
                 Grade = Grade.A,
                 Course = physics,
                 Student = alice
