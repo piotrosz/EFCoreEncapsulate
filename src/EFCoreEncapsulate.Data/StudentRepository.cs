@@ -3,27 +3,25 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFCoreEncapsulate.Data
 {
-    public class StudentRepository
+    public class StudentRepository : Repository
     {
-        private readonly SchoolContext _schoolContext;
-        public StudentRepository(SchoolContext schoolContext)
+        public StudentRepository(SchoolContext schoolContext) : base(schoolContext)
         {
-            _schoolContext = schoolContext;
         }
 
-        public Student? GetByIdOrNull(long id)
+        public async Task<Student?> GetByIdOrNullAsync(long id)
         {
             //return _schoolContext.Students.SingleOrDefault(x => x.Id == id);
 
             // only Find() reads from cache (AutoInclude)
             // good practice to use it whenever possible
-            return _schoolContext.Students.Find(id);
+            return await SchoolContext.Students.FindAsync(id);
         }
 
         // Avoiding Cartesian explosion by using AsSplitQuery() and no AutoInclude (first approach)
         public Student? GetByIdOrNull_SplitQueries(long id)
         {
-            return _schoolContext.Students
+            return SchoolContext.Students
                 .Include(x => x.CourseEnrollments)
                 .ThenInclude(x => x.Course)
                 .Include(x => x.SportEnrollments)
@@ -36,13 +34,13 @@ namespace EFCoreEncapsulate.Data
         // Produces cleaner SQL queries than AsSplitQuery
         public Student? GetByIdOrNull_ExplicitLoading(long id)
         {
-            Student? student = _schoolContext.Set<Student>().Find(id);
+            Student? student = SchoolContext.Set<Student>().Find(id);
 
             if (student == null)
                 return null;
 
-            _schoolContext.Entry(student).Collection(x => x.CourseEnrollments).Load();
-            _schoolContext.Entry(student).Collection(x => x.SportEnrollments).Load();
+            SchoolContext.Entry(student).Collection(x => x.CourseEnrollments).Load();
+            SchoolContext.Entry(student).Collection(x => x.SportEnrollments).Load();
 
             return student;
         }
