@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using EFCoreEncapsulate.Data;
 using EFCoreEncapsulate.Model;
 using Microsoft.AspNetCore.Mvc;
@@ -52,23 +53,24 @@ public class StudentController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> EnrollInCourse(long studentId, long courseId, Grade grade)
+    public async Task<IActionResult> EnrollInCourse(
+        [FromBody, Required]EnrollInCourseDto enrollInCourse)
     {
-        Student student = await _studentRepository.GetByIdOrNullAsync(studentId);
+        Student student = await _studentRepository.GetByIdOrNullAsync(enrollInCourse.StudentId);
 
         if (student == null)
         {
             return NotFound("Student not found");
         }
 
-        Course course = await _courseRepository.GetByIdOrNullAsync(courseId);
+        Course course = await _courseRepository.GetByIdOrNullAsync(enrollInCourse.CourseId);
 
         if (course == null)
         {
             return BadRequest("Course not found");
         }
 
-        var result = student.EnrollInCourse(course, grade);
+        var result = student.EnrollInCourse(course, enrollInCourse.Grade);
 
         if (result.IsFailure)
         {
@@ -78,5 +80,12 @@ public class StudentController : ControllerBase
         await _schoolContext.SaveChangesAsync();
 
         return Ok();
+    }
+
+    public class EnrollInCourseDto
+    {
+        public long StudentId { get; set; }
+        public long CourseId { get; set; }
+        public Grade Grade { get; set; }
     }
 }

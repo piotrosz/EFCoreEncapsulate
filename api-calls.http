@@ -1,2 +1,18 @@
 
 GET http://localhost:5055/students/1 HTTP/1.1
+
+###
+
+GET http://localhost:5055/students/2 HTTP/1.1
+
+
+###
+
+POST http://localhost:5055/students HTTP/1.1
+content-type: application/json
+
+{
+    "studentId": "1",
+    "courseId": "2",
+    "grade": 2
+}
