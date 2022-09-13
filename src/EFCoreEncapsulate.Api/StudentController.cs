@@ -1,5 +1,7 @@
 using System.ComponentModel.DataAnnotations;
+using EFCoreEncapsulate.Api.Dtos;
 using EFCoreEncapsulate.Data;
+using EFCoreEncapsulate.DataContracts;
 using EFCoreEncapsulate.Model;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,7 +15,6 @@ public class StudentController : ControllerBase
     private readonly StudentRepository _studentRepository;
     private readonly CourseRepository _courseRepository;
     
-
     public StudentController(
         StudentRepository studentRepository,
         CourseRepository courseRepository, 
@@ -27,33 +28,18 @@ public class StudentController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<StudentDto>> Get(long id)
     {
-        Student student = await _studentRepository.GetByIdOrNullAsync(id);
+        StudentDto student = await _studentRepository.GetStudentDtoOrNullAsync(id);
 
         if (student == null)
         {
-            return null;
+            return NotFound("Student not found");
         }
 
-        return new StudentDto
-        {
-            StudentId = student.Id,
-            Name = student.Name,
-            Email = student.Email,
-            CourseEnrollments = student.CourseEnrollments.Select(x => new CourseEnrollmentDto
-            {
-                Course = x.Course.Name,
-                Grade = x.Grade.ToString()
-            }).ToList(),
-            SportEnrollments = student.SportEnrollments.Select(x => new SportEnrollmentDto
-            {
-                Sport = x.Sport.Name,
-                Grade = x.Grade.ToString()
-            }).ToList()
-        };
+        return Ok(student);
     }
 
     [HttpPost]
-    public async Task<IActionResult> EnrollInCourse(
+    public async Task<ActionResult> EnrollInCourse(
         [FromBody, Required]EnrollInCourseDto enrollInCourse)
     {
         Student student = await _studentRepository.GetByIdOrNullAsync(enrollInCourse.StudentId);
@@ -77,15 +63,47 @@ public class StudentController : ControllerBase
             return BadRequest(result.Error);
         }
 
+        // Not using custom unit of work to avoid shallow abstraction
+        // SchoolContext is already a unit of work
         await _schoolContext.SaveChangesAsync();
 
         return Ok();
     }
 
-    public class EnrollInCourseDto
+    [HttpPost]
+    public async Task<ActionResult> EditPersonalInfo(long studentId, string name)
     {
-        public long StudentId { get; set; }
-        public long CourseId { get; set; }
-        public Grade Grade { get; set; }
+        Student student = await _studentRepository.GetByIdOrNullAsync(studentId);
+        if (student == null)
+        {
+            return NotFound("Student not found");
+        }
+
+        student.Name = name;
+
+        await _schoolContext.SaveChangesAsync();
+
+        return Ok();
     }
+
+    // AutoMapper could be used
+    //private static StudentDto MapToDto(Student student)
+    //{
+    //    return new StudentDto
+    //    {
+    //        StudentId = student.Id,
+    //        Name = student.Name,
+    //        Email = student.Email,
+    //        CourseEnrollments = student.CourseEnrollments.Select(x => new CourseEnrollmentDto
+    //        {
+    //            Course = x.Course.Name,
+    //            Grade = x.Grade.ToString()
+    //        }).ToList(),
+    //        SportEnrollments = student.SportEnrollments.Select(x => new SportEnrollmentDto
+    //        {
+    //            Sport = x.Sport.Name,
+    //            Grade = x.Grade.ToString()
+    //        }).ToList()
+    //    };
+    //}
 }

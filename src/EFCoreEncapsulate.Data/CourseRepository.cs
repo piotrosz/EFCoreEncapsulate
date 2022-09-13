@@ -11,6 +11,6 @@ public class CourseRepository : Repository
 
     public async Task<Course?> GetByIdOrNullAsync(long id)
     {
-        return await SchoolContext.Courses.FindAsync(id);
+        return await SchoolContext.Set<Course>().FindAsync(id);
     }
 }

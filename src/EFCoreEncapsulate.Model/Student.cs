@@ -2,6 +2,7 @@
 
 namespace EFCoreEncapsulate.Model;
 
+// Aggregate
 public class Student : Entity
 {
     public string Name { get; set; }
@@ -12,6 +13,8 @@ public class Student : Entity
 
     public Result EnrollInCourse(Course course, Grade grade)
     {
+        // Keeping invariant
+        // Without full data (enrollments in this case) aggregate cannot enforce its invariants
         if (CourseEnrollments.Any(x => x.CourseId == course.Id))
         {
             return Result.Failure($"Already enrolled in course '{course.Name}'");

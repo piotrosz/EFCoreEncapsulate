@@ -1,3 +1,7 @@
+It is all based on Vladimir Khorikov Pluralsight course
+
+https://app.pluralsight.com/library/courses/ef-core-6-encapsulating-usage
+
 If not using VS (i.e. text editor like VS Code):
 
 https://docs.microsoft.com/en-us/ef/core/cli/dotnet

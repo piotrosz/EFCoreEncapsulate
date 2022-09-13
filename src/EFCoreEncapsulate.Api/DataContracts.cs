@@ -1,11 +1,4 @@
-﻿namespace EFCoreEncapsulate.Api;
+﻿using EFCoreEncapsulate.Api.Dtos;
 
-public class StudentDto
-{
-    public long StudentId { get; set; }
-    public string Name { get; set; }
-    public string Email { get; set; }
+namespace EFCoreEncapsulate.Api;
 
-    public List<CourseEnrollmentDto> CourseEnrollments { get; set; }
-    public List<SportEnrollmentDto> SportEnrollments { get; set; }
-}
