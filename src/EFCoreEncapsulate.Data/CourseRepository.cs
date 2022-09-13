@@ -2,15 +2,10 @@
 
 namespace EFCoreEncapsulate.Data;
 
-public class CourseRepository : Repository
+public class CourseRepository : Repository<Course>
 {
-
     public CourseRepository(SchoolContext schoolContext) : base(schoolContext)
     {
     }
 
-    public async Task<Course?> GetByIdOrNullAsync(long id)
-    {
-        return await SchoolContext.Set<Course>().FindAsync(id);
-    }
 }

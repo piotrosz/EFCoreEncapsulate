@@ -4,19 +4,24 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFCoreEncapsulate.Data
 {
-    public class StudentRepository : Repository
+    public class StudentRepository : Repository<Student>
     {
         public StudentRepository(SchoolContext schoolContext) : base(schoolContext)
         {
         }
 
-        public async Task<Student?> GetByIdOrNullAsync(long id)
+        public async Task<IReadOnlyList<StudentDto>> GetAllStudentsDtoAsync()
         {
-            //return _schoolContext.Students.SingleOrDefault(x => x.Id == id);
+            var students = await SchoolContext.Set<Student>().ToListAsync();
 
-            // only Find() reads from cache (AutoInclude)
-            // good practice to use it whenever possible
-            return await SchoolContext.Set<Student>().FindAsync(id);
+            List<SchoolContext.CourseEnrollmentData> enrollments = await SchoolContext.Set<SchoolContext.CourseEnrollmentData>()
+                .FromSqlInterpolated($@"
+                    SELECT e.StudentID, e.Grade, c.Name Course
+                    FROM dbo.CourseEnrollment e
+                    INNER JOIN dbo.Course c ON e.CourseID = c.CourseID")
+                .ToListAsync();
+
+            return students.Select(x => MapToDto(x, enrollments.Where(s => s.StudentId == x.Id).ToList())).ToList();
         }
 
         public async Task<StudentDto?> GetStudentDtoOrNullAsync(long id)
@@ -28,20 +33,25 @@ namespace EFCoreEncapsulate.Data
                 return null;
             }
 
-            List<SchoolContext.EnrollmentData> enrollments = SchoolContext.Set<SchoolContext.EnrollmentData>()
+            List<SchoolContext.CourseEnrollmentData> courseEnrollments = await SchoolContext.Set<SchoolContext.CourseEnrollmentData>()
                 .FromSqlInterpolated($@"
-                SELECT e.StudentID, e.Grade, c.Name Course
-                FROM dbo.CourseEnrollment e
-                INNER JOIN dbo.Course c ON e.CourseID = c.CourseID
-                WHERE e.StudentID = {id}")
-                .ToList();
+                    SELECT e.StudentID, e.Grade, c.Name Course
+                    FROM dbo.CourseEnrollment e
+                    INNER JOIN dbo.Course c ON e.CourseID = c.CourseID
+                    WHERE e.StudentID = {id}")
+                .ToListAsync();
 
+            return MapToDto(student, courseEnrollments);
+        }
+
+        private static StudentDto MapToDto(Student student, IReadOnlyList<SchoolContext.CourseEnrollmentData> courseEnrollments)
+        {
             return new StudentDto
             {
-                StudentId = id,
+                StudentId = student.Id,
                 Name = student.Name,
                 Email = student.Email,
-                CourseEnrollments = enrollments.Select(x => new CourseEnrollmentDto
+                CourseEnrollments = courseEnrollments.Select(x => new CourseEnrollmentDto
                 {
                     Course = x.Course,
                     Grade = ((Grade)x.Grade).ToString()

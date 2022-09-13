@@ -100,7 +100,7 @@ public sealed class SchoolContext : DbContext
             //x.Navigation(p => p.Sport).AutoInclude();
         });
 
-        modelBuilder.Entity<EnrollmentData>(x =>
+        modelBuilder.Entity<CourseEnrollmentData>(x =>
         {
             x.HasNoKey();
             x.Property(p => p.StudentId);
@@ -206,11 +206,11 @@ public sealed class SchoolContext : DbContext
     }
 
     // Key-less entity
-    internal class EnrollmentData
+    internal class CourseEnrollmentData
     {
         public long StudentId { get; set; }
         public int Grade { get; set; }
-        public string Course { get; set; }
+        public string? Course { get; set; }
     }
 
 }

@@ -6,7 +6,7 @@
         public string Name { get; set; }
         public string Email { get; set; }
 
-        public List<CourseEnrollmentDto> CourseEnrollments { get; set; }
-        public List<SportEnrollmentDto> SportEnrollments { get; set; }
+        public IReadOnlyList<CourseEnrollmentDto> CourseEnrollments { get; set; }
+        public IReadOnlyList<SportEnrollmentDto> SportEnrollments { get; set; }
     }
 }
