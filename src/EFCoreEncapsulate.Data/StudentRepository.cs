@@ -14,14 +14,26 @@ namespace EFCoreEncapsulate.Data
         {
             var students = await SchoolContext.Set<Student>().ToListAsync();
 
-            List<SchoolContext.CourseEnrollmentData> enrollments = await SchoolContext.Set<SchoolContext.CourseEnrollmentData>()
+            List<SchoolContext.CourseEnrollmentData> courseEnrollments = await SchoolContext.Set<SchoolContext.CourseEnrollmentData>()
                 .FromSqlInterpolated($@"
-                    SELECT e.StudentID, e.Grade, c.Name Course
+                    SELECT e.StudentID, e.Grade, c.Name AS CourseName
                     FROM dbo.CourseEnrollment e
-                    INNER JOIN dbo.Course c ON e.CourseID = c.CourseID")
+                    INNER JOIN dbo.Course c ON e.CourseID = c.CourseId")
                 .ToListAsync();
 
-            return students.Select(x => MapToDto(x, enrollments.Where(s => s.StudentId == x.Id).ToList())).ToList();
+            List<SchoolContext.SportEnrollmentData> sportEnrollments = await SchoolContext.Set<SchoolContext.SportEnrollmentData>()
+                .FromSqlInterpolated($@"
+                    SELECT e.StudentID, e.Grade, c.Name AS SportName
+                    FROM dbo.SportEnrollment e
+                    INNER JOIN dbo.Sport c ON e.SportID = c.SportId")
+                .ToListAsync();
+
+
+            return students.Select(x => MapToDto(
+                x, 
+                courseEnrollments.Where(s => s.StudentId == x.Id).ToList(),
+                sportEnrollments.Where(s => s.StudentId == x.Id).ToList()))
+                .ToList();
         }
 
         public async Task<StudentDto?> GetStudentDtoOrNullAsync(long id)
@@ -33,18 +45,29 @@ namespace EFCoreEncapsulate.Data
                 return null;
             }
 
-            List<SchoolContext.CourseEnrollmentData> courseEnrollments = await SchoolContext.Set<SchoolContext.CourseEnrollmentData>()
+            IReadOnlyList<SchoolContext.CourseEnrollmentData> courseEnrollments = await SchoolContext.Set<SchoolContext.CourseEnrollmentData>()
                 .FromSqlInterpolated($@"
-                    SELECT e.StudentID, e.Grade, c.Name Course
+                    SELECT e.StudentID, e.Grade, c.Name AS CourseName
                     FROM dbo.CourseEnrollment e
-                    INNER JOIN dbo.Course c ON e.CourseID = c.CourseID
+                    INNER JOIN dbo.Course c ON e.CourseID = c.CourseId
+                    WHERE e.StudentID = {id}")
+                .ToListAsync();
+            
+            IReadOnlyList<SchoolContext.SportEnrollmentData> sportEnrollments = await SchoolContext.Set<SchoolContext.SportEnrollmentData>()
+                .FromSqlInterpolated($@"
+                    SELECT e.StudentID, e.Grade, s.Name AS SportName
+                    FROM dbo.SportEnrollment e
+                    INNER JOIN dbo.Sport s ON e.SportId = s.SportId
                     WHERE e.StudentID = {id}")
                 .ToListAsync();
 
-            return MapToDto(student, courseEnrollments);
+            return MapToDto(student, courseEnrollments, sportEnrollments);
         }
 
-        private static StudentDto MapToDto(Student student, IReadOnlyList<SchoolContext.CourseEnrollmentData> courseEnrollments)
+        private static StudentDto MapToDto(
+            Student student, 
+            IReadOnlyList<SchoolContext.CourseEnrollmentData> courseEnrollments,
+            IReadOnlyList<SchoolContext.SportEnrollmentData> sportEnrollments)
         {
             return new StudentDto
             {
@@ -53,9 +76,15 @@ namespace EFCoreEncapsulate.Data
                 Email = student.Email,
                 CourseEnrollments = courseEnrollments.Select(x => new CourseEnrollmentDto
                 {
-                    Course = x.Course,
+                    CourseName = x.CourseName,
+                    Grade = ((Grade)x.Grade).ToString()
+                }).ToList(),
+                SportEnrollments = sportEnrollments.Select(x => new SportEnrollmentDto
+                {
+                    SportName = x.SportName,
                     Grade = ((Grade)x.Grade).ToString()
                 }).ToList()
+
             };
         }
 

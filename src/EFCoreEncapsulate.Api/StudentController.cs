@@ -38,6 +38,14 @@ public class StudentController : ControllerBase
         return Ok(student);
     }
 
+     [HttpGet]
+    public async Task<ActionResult<IReadOnlyList<StudentDto>>> Get()
+    {
+        var students = await _studentRepository.GetAllStudentsDtoAsync();
+
+        return Ok(students);
+    }
+
     [HttpPost]
     public async Task<ActionResult> EnrollInCourse(
         [FromBody, Required]EnrollInCourseDto enrollInCourse)

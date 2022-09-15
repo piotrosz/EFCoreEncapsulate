@@ -74,6 +74,14 @@ public sealed class SchoolContext : DbContext
             x.Property(p => p.Id).HasColumnName("CourseID");
             x.Property(p => p.Name).HasMaxLength(200);;
         });
+        
+        modelBuilder.Entity<Sport>(x =>
+        {
+            x.ToTable("Sport").HasKey(k => k.Id);
+            x.Property(p => p.Id).HasColumnName("SportID");
+            x.Property(p => p.Name).HasMaxLength(200);;
+        });
+        
         modelBuilder.Entity<CourseEnrollment>(x =>
         {
             x.ToTable("CourseEnrollment").HasKey(k => k.Id);
@@ -105,7 +113,15 @@ public sealed class SchoolContext : DbContext
             x.HasNoKey();
             x.Property(p => p.StudentId);
             x.Property(p => p.Grade);
-            x.Property(p => p.Course);
+            x.Property(p => p.CourseName);
+        });
+
+        modelBuilder.Entity<SportEnrollmentData>(x =>
+        {
+            x.HasNoKey();
+            x.Property(p => p.StudentId);
+            x.Property(p => p.Grade);
+            x.Property(p => p.SportName);
         });
 
         SeedTestData(modelBuilder);
@@ -210,7 +226,14 @@ public sealed class SchoolContext : DbContext
     {
         public long StudentId { get; set; }
         public int Grade { get; set; }
-        public string? Course { get; set; }
+        public string? CourseName { get; set; }
+    }
+
+    internal class SportEnrollmentData
+    {
+        public long StudentId { get; set; }
+        public int Grade { get; set; }
+        public string? SportName { get; set; }
     }
 
 }

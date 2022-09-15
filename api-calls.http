@@ -1,4 +1,10 @@
 
+### Get all students
+
+GET http://localhost:5055/students HTTP/1.1
+
+###
+
 GET http://localhost:5055/students/1 HTTP/1.1
 
 ###

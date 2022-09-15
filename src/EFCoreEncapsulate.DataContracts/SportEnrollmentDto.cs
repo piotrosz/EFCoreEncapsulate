@@ -2,6 +2,6 @@
 
 public class SportEnrollmentDto
 {
-    public string Grade { get; set; }
-    public string Sport { get; set; }
+    public string? Grade { get; set; }
+    public string? SportName { get; set; }
 }
