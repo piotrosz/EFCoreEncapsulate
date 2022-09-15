@@ -9,12 +9,6 @@ public sealed class SchoolContext : DbContext
     private readonly string _connectionString;
     private readonly bool _useConsoleLogger;
 
-    //public DbSet<Student> Students { get; set; }
-    //public DbSet<Course> Courses { get; set; }
-    //public DbSet<Course> Sports { get; set; }
-    //public DbSet<CourseEnrollment> CourseEnrollments { get; set; }
-    //public DbSet<SportEnrollment> SportEnrollments { get; set; }
-
     // This is a way to encapsulate DbContext (reduce number of possible config options, keeping invariants)
     public SchoolContext(string connectionString, bool useConsoleLogger)
     {
@@ -72,7 +66,9 @@ public sealed class SchoolContext : DbContext
         {
             x.ToTable("Course").HasKey(k => k.Id);
             x.Property(p => p.Id).HasColumnName("CourseID");
-            x.Property(p => p.Name).HasMaxLength(200);;
+            x.Property(p => p.Name).HasMaxLength(200);
+
+            x.HasMany(x => x.Teachers).WithMany(x => x.Courses);
         });
         
         modelBuilder.Entity<Sport>(x =>
@@ -122,6 +118,14 @@ public sealed class SchoolContext : DbContext
             x.Property(p => p.StudentId);
             x.Property(p => p.Grade);
             x.Property(p => p.SportName);
+        });
+
+        modelBuilder.Entity<Teacher>(x =>
+        {
+            x.ToTable("Teacher").HasKey(k => k.Id);
+            x.Property(p => p.Id).HasColumnName("TeacherID");
+            x.Property(p => p.Name).HasMaxLength(200);
+            x.HasMany(p => p.Courses).WithMany(p => p.Teachers);
         });
 
         SeedTestData(modelBuilder);
