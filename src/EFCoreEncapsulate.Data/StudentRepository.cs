@@ -14,14 +14,14 @@ namespace EFCoreEncapsulate.Data
         {
             var students = await SchoolContext.Set<Student>().ToListAsync();
 
-            List<SchoolContext.CourseEnrollmentData> courseEnrollments = await SchoolContext.Set<SchoolContext.CourseEnrollmentData>()
+            var courseEnrollments = await SchoolContext.Set<CourseEnrollmentData>()
                 .FromSqlInterpolated($@"
                     SELECT e.StudentID, e.Grade, c.Name AS CourseName
                     FROM dbo.CourseEnrollment e
                     INNER JOIN dbo.Course c ON e.CourseID = c.CourseId")
                 .ToListAsync();
 
-            List<SchoolContext.SportEnrollmentData> sportEnrollments = await SchoolContext.Set<SchoolContext.SportEnrollmentData>()
+            var sportEnrollments = await SchoolContext.Set<SportEnrollmentData>()
                 .FromSqlInterpolated($@"
                     SELECT e.StudentID, e.Grade, c.Name AS SportName
                     FROM dbo.SportEnrollment e
@@ -45,7 +45,7 @@ namespace EFCoreEncapsulate.Data
                 return null;
             }
 
-            IReadOnlyList<SchoolContext.CourseEnrollmentData> courseEnrollments = await SchoolContext.Set<SchoolContext.CourseEnrollmentData>()
+            var courseEnrollments = await SchoolContext.Set<CourseEnrollmentData>()
                 .FromSqlInterpolated($@"
                     SELECT e.StudentID, e.Grade, c.Name AS CourseName
                     FROM dbo.CourseEnrollment e
@@ -53,7 +53,7 @@ namespace EFCoreEncapsulate.Data
                     WHERE e.StudentID = {id}")
                 .ToListAsync();
             
-            IReadOnlyList<SchoolContext.SportEnrollmentData> sportEnrollments = await SchoolContext.Set<SchoolContext.SportEnrollmentData>()
+            var sportEnrollments = await SchoolContext.Set<SportEnrollmentData>()
                 .FromSqlInterpolated($@"
                     SELECT e.StudentID, e.Grade, s.Name AS SportName
                     FROM dbo.SportEnrollment e
@@ -66,8 +66,8 @@ namespace EFCoreEncapsulate.Data
 
         private static StudentDto MapToDto(
             Student student, 
-            IReadOnlyList<SchoolContext.CourseEnrollmentData> courseEnrollments,
-            IReadOnlyList<SchoolContext.SportEnrollmentData> sportEnrollments)
+            IReadOnlyList<CourseEnrollmentData> courseEnrollments,
+            IReadOnlyList<SportEnrollmentData> sportEnrollments)
         {
             return new StudentDto
             {

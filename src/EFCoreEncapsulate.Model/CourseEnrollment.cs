@@ -2,6 +2,21 @@
 
 public class CourseEnrollment : Entity
 {
+    public CourseEnrollment(long id, long studentId, long courseId, Grade grade)
+    {
+        Id = id;
+        StudentId = studentId;
+        CourseId = courseId;
+        Grade = grade;
+    }
+
+    public CourseEnrollment(Student student, Course course, Grade grade)
+    {
+        StudentId = student.Id;
+        CourseId = course.Id;
+        Grade = grade;
+    }
+
     public Grade Grade { get; set; }
 
     public virtual long CourseId { get; set; }
