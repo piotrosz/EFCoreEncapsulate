@@ -5,7 +5,7 @@ namespace EFCoreEncapsulate.Model;
 // Aggregate
 public class Student : Entity
 {
-    public Student(long id, string name, string email)
+    public Student(long id, string name, Email email)
     {
         Id = id;
         Name = name;
@@ -13,7 +13,8 @@ public class Student : Entity
     }
 
     public string Name { get; set; }
-    public string Email { get; set; }
+    public Email Email { get; set; }
+    
     public ICollection<CourseEnrollment> CourseEnrollments { get; set; }
 
     public ICollection<SportEnrollment> SportEnrollments { get; set; }

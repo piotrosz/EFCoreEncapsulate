@@ -10,7 +10,12 @@ public class StudentEntityTypeConfiguration : IEntityTypeConfiguration<Student>
     {
         builder.ToTable("Student").HasKey(k => k.Id);
         builder.Property(p => p.Id).HasColumnName("StudentID");
-        builder.Property(p => p.Email).HasMaxLength(200).IsRequired();
+        builder
+            .OwnsOne(p => p.Email)
+            .Property(x => x.Value)
+            .HasColumnName("Email")
+            .HasMaxLength(150).IsRequired();
+            
         builder.Property(p => p.Name).HasMaxLength(200).IsRequired();
         builder.HasMany(p => p.CourseEnrollments).WithOne(p => p.Student);
         builder.HasMany(p => p.SportEnrollments).WithOne(p => p.Student);
