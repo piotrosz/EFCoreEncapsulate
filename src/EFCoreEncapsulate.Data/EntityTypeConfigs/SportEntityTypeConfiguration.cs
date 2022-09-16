@@ -10,7 +10,7 @@ public class SportEntityTypeConfiguration : IEntityTypeConfiguration<Sport>
     {           
         builder.ToTable("Sport").HasKey(k => k.Id);
         builder.Property(p => p.Id).HasColumnName("SportID");
-        builder.Property(p => p.Name).HasMaxLength(200);
+        builder.Property(p => p.Name).HasMaxLength(200).IsRequired();
     }
 }
 
