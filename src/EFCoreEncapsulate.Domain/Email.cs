@@ -1,7 +1,7 @@
 using System.Text.RegularExpressions;
 using CSharpFunctionalExtensions;
 
-namespace EFCoreEncapsulate.Model;
+namespace EFCoreEncapsulate.Domain;
 
 // Example of ValueObject
 public class Email : ValueObject

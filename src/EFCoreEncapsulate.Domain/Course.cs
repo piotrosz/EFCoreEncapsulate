@@ -1,4 +1,4 @@
-﻿namespace EFCoreEncapsulate.Model;
+﻿namespace EFCoreEncapsulate.Domain;
 
 public class Course : Entity
 {

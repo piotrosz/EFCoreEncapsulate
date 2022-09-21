@@ -1,6 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 
-namespace EFCoreEncapsulate.Model;
+namespace EFCoreEncapsulate.Domain;
 
 // Aggregate
 public class Student : Entity
