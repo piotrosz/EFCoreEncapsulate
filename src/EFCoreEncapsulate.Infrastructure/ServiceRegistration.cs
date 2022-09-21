@@ -9,6 +9,8 @@ public static class ServiceRegistration
       // This is a way to encapsulate DbContext (reduce number of possible config options, keeping invariants)
     public static IServiceCollection AddInfrastructure(this IServiceCollection services,  string connectionString, bool useConsoleLogger)
     {
+        services.AddSingleton<IModelConfiguration, SqlModelConfiguration>();
+
         services.AddDbContext<SchoolContext>(options => {
              options.UseSqlServer(connectionString, 
              sqlOptions => {
