@@ -5,6 +5,11 @@ namespace EFCoreEncapsulate.Model;
 // Aggregate
 public class Student : Entity
 {
+    // EF needs this constructor
+    protected Student()
+    {
+    }
+    
     public Student(long id, string name, Email email)
     {
         Id = id;
@@ -13,11 +18,11 @@ public class Student : Entity
     }
 
     public string Name { get; set; }
-    public Email Email { get; set; }
+    public Email Email { get; protected set; }
     
-    public ICollection<CourseEnrollment> CourseEnrollments { get; set; }
+    public ICollection<CourseEnrollment> CourseEnrollments { get; protected set; }
 
-    public ICollection<SportEnrollment> SportEnrollments { get; set; }
+    public ICollection<SportEnrollment> SportEnrollments { get; protected set; }
 
     public Result EnrollInCourse(Course course, Grade grade)
     {

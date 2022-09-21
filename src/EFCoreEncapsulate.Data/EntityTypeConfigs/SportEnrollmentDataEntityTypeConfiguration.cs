@@ -1,7 +1,8 @@
+using EFCoreEncapsulate.Data.KeylessEntities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace EFCoreEncapsulate.Data;
+namespace EFCoreEncapsulate.Data.EntityTypeConfigs;
 
 public class SportEnrollmentDataEntityTypeConfiguration : IEntityTypeConfiguration<SportEnrollmentData>
 {

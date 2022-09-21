@@ -2,7 +2,7 @@ using EFCoreEncapsulate.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace EFCoreEncapsulate.Data;
+namespace EFCoreEncapsulate.Data.EntityTypeConfigs;
 
 public class StudentEntityTypeConfiguration : IEntityTypeConfiguration<Student>
 {
@@ -10,6 +10,7 @@ public class StudentEntityTypeConfiguration : IEntityTypeConfiguration<Student>
     {
         builder.ToTable("Student").HasKey(k => k.Id);
         builder.Property(p => p.Id).HasColumnName("StudentID");
+        
         builder
             .OwnsOne(p => p.Email)
             .Property(x => x.Value)

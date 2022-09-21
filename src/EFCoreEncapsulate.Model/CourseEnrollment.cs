@@ -2,6 +2,10 @@
 
 public class CourseEnrollment : Entity
 {
+    protected CourseEnrollment()
+    {
+    }
+    
     public CourseEnrollment(long id, long studentId, long courseId, Grade grade)
     {
         Id = id;

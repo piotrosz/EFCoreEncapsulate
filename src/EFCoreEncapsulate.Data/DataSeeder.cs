@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 internal static class DataSeeder
 {
-    public static void SeedTestData(ModelBuilder modelBuilder)
+    public static void SeedTestData(this ModelBuilder modelBuilder)
     {
         var bob = new Student(1, "Bob", Email.Create("bob@bob.pl").Value);
         var alice = new Student(2, "Alice", Email.Create("alice@alice.com").Value);

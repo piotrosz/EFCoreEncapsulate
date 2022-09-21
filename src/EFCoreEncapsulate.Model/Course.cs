@@ -2,6 +2,10 @@
 
 public class Course : Entity
 {
+    protected Course()
+    {
+    }
+
     public Course(long id, string name)
     {
         Id = id;

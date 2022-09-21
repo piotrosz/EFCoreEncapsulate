@@ -1,4 +1,4 @@
-namespace EFCoreEncapsulate.Data;
+namespace EFCoreEncapsulate.Data.KeylessEntities;
 
 public class SportEnrollmentData
 {

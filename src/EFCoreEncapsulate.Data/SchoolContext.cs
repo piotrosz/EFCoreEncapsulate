@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EFCoreEncapsulate.Data.EntityTypeConfigs;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace EFCoreEncapsulate.Data;
@@ -15,6 +16,13 @@ public sealed partial class SchoolContext : DbContext
         _useConsoleLogger = useConsoleLogger;
     }
 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder
+            .ApplyConfigurationsFromAssembly(typeof(StudentEntityTypeConfiguration).Assembly)
+        .SeedTestData();
+    }
+    
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseSqlServer(_connectionString);
@@ -43,11 +51,5 @@ public sealed partial class SchoolContext : DbContext
         return LoggerFactory.Create(builder => builder
             .AddFilter((category, level) => category == DbLoggerCategory.Database.Command.Name && level == LogLevel.Information)
             .AddConsole());
-    }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(StudentEntityTypeConfiguration).Assembly);
-        DataSeeder.SeedTestData(modelBuilder);
     }
 }

@@ -1,4 +1,5 @@
 using EFCoreEncapsulate.Data;
+using EFCoreEncapsulate.Data.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 

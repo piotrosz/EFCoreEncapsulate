@@ -1,4 +1,4 @@
-namespace EFCoreEncapsulate.Data;
+namespace EFCoreEncapsulate.Data.KeylessEntities;
 
 // Key-less entity
 public class CourseEnrollmentData

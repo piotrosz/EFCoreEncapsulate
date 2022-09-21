@@ -1,6 +1,6 @@
 ﻿using EFCoreEncapsulate.Model;
 
-namespace EFCoreEncapsulate.Data;
+namespace EFCoreEncapsulate.Data.Repositories;
 
 public abstract class Repository<T> where T : Entity
 {

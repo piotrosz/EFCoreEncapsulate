@@ -2,7 +2,7 @@ using EFCoreEncapsulate.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace EFCoreEncapsulate.Data;
+namespace EFCoreEncapsulate.Data.EntityTypeConfigs;
 
 public class SportEntityTypeConfiguration : IEntityTypeConfiguration<Sport>
 {

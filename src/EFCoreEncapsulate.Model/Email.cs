@@ -3,6 +3,7 @@ using CSharpFunctionalExtensions;
 
 namespace EFCoreEncapsulate.Model;
 
+// Example of ValueObject
 public class Email : ValueObject
 {
     public string Value { get; }
@@ -15,15 +16,22 @@ public class Email : ValueObject
     public static Result<Email> Create(string input)
     {
         if (string.IsNullOrWhiteSpace(input))
-            return Result.Failure<Email>("Value is required");
-
+        {
+            // Plain strings could be replaced with something more generic
+            return Result.Failure<Email>("Value is required");  
+        }
+        
         string email = input.Trim();
 
         if (email.Length > 150)
+        {
             return Result.Failure<Email>("Invalid length");
+        }
 
         if (Regex.IsMatch(email, @"^(.+)@(.+)$") == false)
+        {
             return Result.Failure<Email>("Value is invalid");
+        }
 
         return new Email(email);
     }
