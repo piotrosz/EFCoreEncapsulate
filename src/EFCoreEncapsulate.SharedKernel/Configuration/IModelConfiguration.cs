@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace GloboTicket.SharedKernel.Configuration;
+namespace EFCoreEncapsulate.SharedKernel.Configuration;
 
 public interface IModelConfiguration
 {

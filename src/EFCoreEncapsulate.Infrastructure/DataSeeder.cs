@@ -1,4 +1,4 @@
-using EFCoreEncapsulate.Model;
+using EFCoreEncapsulate.Domain;
 using Microsoft.EntityFrameworkCore;
 
 internal static class DataSeeder

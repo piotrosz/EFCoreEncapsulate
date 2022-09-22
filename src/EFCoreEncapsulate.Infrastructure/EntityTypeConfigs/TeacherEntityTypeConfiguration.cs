@@ -1,13 +1,14 @@
+﻿using EFCoreEncapsulate.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace EFCoreEncapsulate.Domain.EntityTypeConfigs;
+namespace EFCoreEncapsulate.Infrastructure.EntityTypeConfigs;
 
 public class TeacherEntityTypeConfiguration : IEntityTypeConfiguration<Teacher>
 {
     public void Configure(EntityTypeBuilder<Teacher> builder)
-    {
-        builder.Property(p => p.Name).HasMaxLength(200).IsRequired();
-        builder.HasMany(p => p.Courses).WithMany(p => p.Teachers);
+    {    
+        builder.ToTable("Teacher").HasKey(k => k.Id);
+        builder.Property(p => p.Id).HasColumnName("TeacherID");
     }
 }

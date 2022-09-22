@@ -1,4 +1,4 @@
-﻿using EFCoreEncapsulate.Model;
+﻿using EFCoreEncapsulate.Domain;
 
 namespace EFCoreEncapsulate.Api.Dtos
 {

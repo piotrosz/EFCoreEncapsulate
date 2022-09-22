@@ -1,9 +1,9 @@
-﻿using EFCoreEncapsulate.Data.EntityTypeConfigs;
+﻿using EFCoreEncapsulate.Domain.EntityTypeConfigs;
 using Microsoft.EntityFrameworkCore;
 
-namespace EFCoreEncapsulate.Data;
+namespace EFCoreEncapsulate.Domain;
 
-public sealed partial class SchoolContext : DbContext
+public sealed class SchoolContext : DbContext
 {
     // Using this DbContext options you can separate domain from infrastructure
     public SchoolContext(DbContextOptions<SchoolContext> options) : base(options)

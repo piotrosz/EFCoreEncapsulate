@@ -1,9 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 using EFCoreEncapsulate.Api.Dtos;
-using EFCoreEncapsulate.Data;
-using EFCoreEncapsulate.Data.Repositories;
 using EFCoreEncapsulate.DataContracts;
-using EFCoreEncapsulate.Model;
+using EFCoreEncapsulate.Domain;
+using EFCoreEncapsulate.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EFCoreEncapsulate.Api;

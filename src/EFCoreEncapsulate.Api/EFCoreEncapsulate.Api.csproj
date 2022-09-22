@@ -9,8 +9,8 @@
 
 	<ItemGroup>
     <ProjectReference Include="..\EFCoreEncapsulate.DataContracts\EFCoreEncapsulate.DataContracts.csproj" />
-    <ProjectReference Include="..\EFCoreEncapsulate.Data\EFCoreEncapsulate.Data.csproj" />
-    <ProjectReference Include="..\EFCoreEncapsulate.Model\EFCoreEncapsulate.Model.csproj" />
+    <ProjectReference Include="..\EFCoreEncapsulate.Domain\EFCoreEncapsulate.Domain.csproj" />
+    <ProjectReference Include="..\EFCoreEncapsulate.Infrastructure\EFCoreEncapsulate.Infrastructure.csproj" />
   </ItemGroup>
 
     <ItemGroup>

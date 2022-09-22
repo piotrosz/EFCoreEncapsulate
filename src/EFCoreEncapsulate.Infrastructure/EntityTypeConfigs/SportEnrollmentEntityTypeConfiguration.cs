@@ -1,20 +1,17 @@
+﻿using EFCoreEncapsulate.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace EFCoreEncapsulate.Domain.EntityTypeConfigs;
+namespace EFCoreEncapsulate.Infrastructure.EntityTypeConfigs;
 
 public class SportEnrollmentEntityTypeConfiguration : IEntityTypeConfiguration<SportEnrollment>
 {
     public void Configure(EntityTypeBuilder<SportEnrollment> x)
-    {
-        x.HasOne(p => p.Student).WithMany(p => p.SportEnrollments);
-        //x.HasOne(p => p.Sport).WithMany();
-        x.Property(p => p.SportId);
-        x.Property(p => p.Grade);
-
+    {           
+        x.ToTable("SportEnrollment").HasKey(k => k.Id);
+        x.Property(p => p.Id).HasColumnName("SportEnrollmentID");
+        
         // New auto include feature
         //x.Navigation(p => p.Sport).AutoInclude();}
     }
 }
-
-

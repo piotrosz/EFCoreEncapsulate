@@ -1,9 +1,9 @@
 ﻿using EFCoreEncapsulate.Data.KeylessEntities;
 using EFCoreEncapsulate.DataContracts;
-using EFCoreEncapsulate.Model;
+using EFCoreEncapsulate.Domain;
 using Microsoft.EntityFrameworkCore;
 
-namespace EFCoreEncapsulate.Data.Repositories;
+namespace EFCoreEncapsulate.Infrastructure.Repositories;
 
 public class StudentRepository : Repository<Student>
 {

@@ -1,8 +1,10 @@
+using EFCoreEncapsulate.Domain;
+using EFCoreEncapsulate.SharedKernel.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace EFCoreEncapsulate.Data;
+namespace EFCoreEncapsulate.Infrastructure;
 
 public static class ServiceRegistration 
 {
