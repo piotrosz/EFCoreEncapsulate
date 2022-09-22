@@ -1,4 +1,4 @@
-namespace EFCoreEncapsulate.Model;
+namespace EFCoreEncapsulate.Domain;
 
 // Introduced to experiment with many-to-many relations
 public class Teacher : Entity
