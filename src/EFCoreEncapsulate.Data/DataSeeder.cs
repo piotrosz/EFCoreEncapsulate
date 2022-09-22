@@ -5,10 +5,33 @@ internal static class DataSeeder
 {
     public static void SeedTestData(this ModelBuilder modelBuilder)
     {
+        // https://github.com/dotnet/efcore/issues/10000
         var bob = new Student(1, "Bob", Email.Create("bob@bob.pl").Value);
         var alice = new Student(2, "Alice", Email.Create("alice@alice.com").Value);
-        modelBuilder.Entity<Student>().HasData(bob, alice);
+        modelBuilder.Entity<Student>().HasData(
+        new {
+            Id = bob.Id,
+            Name = bob.Name
+        },
+        new {
+            Id = alice.Id,
+            Name = alice.Name,
+        });
 
+        modelBuilder.Entity<Email>().HasData(
+            new
+            {
+                StudentId = bob.Id,
+                Value = bob.Email.Value
+            },
+            new
+            {
+                StudentId = alice.Id,
+                Value = alice.Email.Value
+            }
+        );
+        
+        
         var physics = new Course(1, "Physics");
         var mathematics = new Course(2, "Mathematics");
 
