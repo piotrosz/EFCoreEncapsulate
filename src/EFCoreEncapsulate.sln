@@ -20,6 +20,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFCoreEncapsulate.DataContr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFCoreEncapsulate.SharedKernel", "EFCoreEncapsulate.SharedKernel\EFCoreEncapsulate.SharedKernel.csproj", "{F016B1B3-1ABE-429C-AE5D-4E8BD077ADF6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFCoreEncapsulate.Domain.Test", "EFCoreEncapsulate.Domain.Test\EFCoreEncapsulate.Domain.Test.csproj", "{4DB65D43-B8F6-4ABF-9F91-4C842C877C42}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,6 +48,10 @@ Global
 		{F016B1B3-1ABE-429C-AE5D-4E8BD077ADF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F016B1B3-1ABE-429C-AE5D-4E8BD077ADF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F016B1B3-1ABE-429C-AE5D-4E8BD077ADF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DB65D43-B8F6-4ABF-9F91-4C842C877C42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DB65D43-B8F6-4ABF-9F91-4C842C877C42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DB65D43-B8F6-4ABF-9F91-4C842C877C42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DB65D43-B8F6-4ABF-9F91-4C842C877C42}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
