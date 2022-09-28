@@ -1,3 +1,4 @@
+using EFCoreEncapsulate.Domain;
 using EFCoreEncapsulate.Infrastructure;
 using EFCoreEncapsulate.Infrastructure.Repositories;
 
@@ -7,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddInfrastructure(builder.Configuration["ConnectionString"], true);
 
-builder.Services.AddTransient<StudentRepository>();
+builder.Services.AddTransient<IStudentRepository, StudentRepository>();
 builder.Services.AddTransient<CourseRepository>();
 
 builder.Services.AddControllers();

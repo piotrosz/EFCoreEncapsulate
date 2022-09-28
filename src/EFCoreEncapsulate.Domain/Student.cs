@@ -18,7 +18,7 @@ public class Student : Entity
     }
 
     public string Name { get; set; }
-    public Email Email { get; protected set; }
+    public Email Email { get; set; }
     
     public ICollection<CourseEnrollment> CourseEnrollments { get; protected set; }
 

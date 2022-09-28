@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFCoreEncapsulate.Infrastructure.Repositories;
 
-public class StudentRepository : Repository<Student>
+public class StudentRepository : Repository<Student>, IStudentRepository
 {
     public StudentRepository(SchoolContext schoolContext) : base(schoolContext)
     {

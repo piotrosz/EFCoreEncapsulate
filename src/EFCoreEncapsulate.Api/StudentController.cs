@@ -78,8 +78,9 @@ public class StudentController : ControllerBase
         return Ok();
     }
 
+    // TODO: name and email validation (FluentValidation)
     [HttpPost]
-    public async Task<ActionResult> EditPersonalInfo(long studentId, string name)
+    public async Task<ActionResult> EditPersonalInfo(long studentId, string name, string email)
     {
         Student student = await _studentRepository.GetByIdOrNullAsync(studentId);
         if (student == null)
@@ -87,7 +88,15 @@ public class StudentController : ControllerBase
             return NotFound("Student not found");
         }
 
+        var emailResult = Email.Create(email);
+
+        if (emailResult.IsFailure)
+        {
+            return BadRequest(emailResult.Error);
+        }
+        
         student.Name = name;
+        student.Email = emailResult.Value;
 
         await _schoolContext.SaveChangesAsync();
 
