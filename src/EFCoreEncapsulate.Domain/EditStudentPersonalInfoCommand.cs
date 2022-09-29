@@ -1,4 +1,7 @@
-﻿namespace EFCoreEncapsulate.Domain;
+﻿
+using EFCoreEncapsulate.SharedKernel;
+
+namespace EFCoreEncapsulate.Domain;
 
 public sealed class EditStudentPersonalInfoCommand : ICommand
 {

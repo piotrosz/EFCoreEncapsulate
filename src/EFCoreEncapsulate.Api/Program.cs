@@ -1,6 +1,7 @@
 using EFCoreEncapsulate.Domain;
 using EFCoreEncapsulate.Infrastructure;
 using EFCoreEncapsulate.Infrastructure.Repositories;
+using EFCoreEncapsulate.SharedKernel;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,10 @@ builder.Services.AddInfrastructure(builder.Configuration["ConnectionString"], tr
 
 builder.Services.AddTransient<IStudentRepository, StudentRepository>();
 builder.Services.AddTransient<CourseRepository>();
+builder.Services.AddSingleton<Messages>();
+
+// TODO: auto registration
+builder.Services.AddTransient<ICommandHandler<EditStudentPersonalInfoCommand>, EditStudentPersonalInfoCommandHandler>();
 
 builder.Services.AddControllers();
 

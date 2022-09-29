@@ -1,10 +1,11 @@
 ﻿using CSharpFunctionalExtensions;
+using EFCoreEncapsulate.SharedKernel;
 
 namespace EFCoreEncapsulate.Domain;
 
 //[AuditLog]
 //[DatabaseRetry]
-internal sealed class EditStudentPersonalInfoCommandHandler : ICommandHandler<EditStudentPersonalInfoCommand>
+public sealed class EditStudentPersonalInfoCommandHandler : ICommandHandler<EditStudentPersonalInfoCommand>
 {
     private readonly IStudentRepository _studentRepository;
     private readonly SchoolContext _schoolContext;

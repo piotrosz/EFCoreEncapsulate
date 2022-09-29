@@ -1,6 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 
-namespace EFCoreEncapsulate.Domain;
+namespace EFCoreEncapsulate.SharedKernel;
 
 public interface ICommandHandler<TCommand>
     where TCommand : ICommand

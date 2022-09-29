@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using EFCoreEncapsulate.Api.Dtos;
 using EFCoreEncapsulate.DataContracts;
 using EFCoreEncapsulate.Domain;
+using EFCoreEncapsulate.Infrastructure;
 using EFCoreEncapsulate.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,15 +15,19 @@ public class StudentController : ControllerBase
     private readonly SchoolContext _schoolContext;
     private readonly StudentRepository _studentRepository;
     private readonly CourseRepository _courseRepository;
+
+    private readonly Messages _messages;
     
     public StudentController(
         StudentRepository studentRepository,
         CourseRepository courseRepository, 
-        SchoolContext schoolContext)
+        SchoolContext schoolContext, 
+        Messages messages)
     {
         _studentRepository = studentRepository;
         _courseRepository = courseRepository;
         _schoolContext = schoolContext;
+        _messages = messages;
     }
 
     [HttpGet("{id}")]
@@ -82,25 +87,8 @@ public class StudentController : ControllerBase
     [HttpPost]
     public async Task<ActionResult> EditPersonalInfo(long studentId, string name, string email)
     {
-        Student student = await _studentRepository.GetByIdOrNullAsync(studentId);
-        if (student == null)
-        {
-            return NotFound("Student not found");
-        }
-
-        var emailResult = Email.Create(email);
-
-        if (emailResult.IsFailure)
-        {
-            return BadRequest(emailResult.Error);
-        }
-        
-        student.Name = name;
-        student.Email = emailResult.Value;
-
-        await _schoolContext.SaveChangesAsync();
-
-        return Ok();
+        var result = await _messages.DispatchAsync(new EditStudentPersonalInfoCommand(studentId, name, email));
+        return result.IsSuccess ? Ok() : BadRequest(result.Error);
     }
 
     // AutoMapper could be used
