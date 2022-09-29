@@ -16,6 +16,12 @@ public class Student : Entity
         Name = name;
         Email = email;
     }
+    
+    public Student(string name, Email email)
+    {
+        Name = name;
+        Email = email;
+    }
 
     public string Name { get; set; }
     public Email Email { get; set; }

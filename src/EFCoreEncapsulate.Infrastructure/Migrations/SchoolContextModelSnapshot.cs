@@ -40,7 +40,8 @@ namespace EFCoreEncapsulate.Infrastructure.Migrations
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("bigint")
+                        .HasColumnName("CourseID");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
@@ -51,14 +52,15 @@ namespace EFCoreEncapsulate.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Course");
+                    b.ToTable("Course", (string)null);
                 });
 
             modelBuilder.Entity("EFCoreEncapsulate.Domain.CourseEnrollment", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("bigint")
+                        .HasColumnName("CourseEnrollmentID");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
@@ -75,14 +77,15 @@ namespace EFCoreEncapsulate.Infrastructure.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("CourseEnrollment");
+                    b.ToTable("CourseEnrollment", (string)null);
                 });
 
             modelBuilder.Entity("EFCoreEncapsulate.Domain.Sport", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("bigint")
+                        .HasColumnName("SportID");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
@@ -93,14 +96,15 @@ namespace EFCoreEncapsulate.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Sport");
+                    b.ToTable("Sport", (string)null);
                 });
 
             modelBuilder.Entity("EFCoreEncapsulate.Domain.SportEnrollment", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("bigint")
+                        .HasColumnName("SportEnrollmentID");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
@@ -117,14 +121,15 @@ namespace EFCoreEncapsulate.Infrastructure.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("SportEnrollment");
+                    b.ToTable("SportEnrollment", (string)null);
                 });
 
             modelBuilder.Entity("EFCoreEncapsulate.Domain.Student", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("bigint")
+                        .HasColumnName("StudentID");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
@@ -135,14 +140,15 @@ namespace EFCoreEncapsulate.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Student");
+                    b.ToTable("Student", (string)null);
                 });
 
             modelBuilder.Entity("EFCoreEncapsulate.Domain.Teacher", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("bigint")
+                        .HasColumnName("TeacherID");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
@@ -153,7 +159,35 @@ namespace EFCoreEncapsulate.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Teacher");
+                    b.ToTable("Teacher", (string)null);
+                });
+
+            modelBuilder.Entity("EFCoreEncapsulate.Infrastructure.KeylessEntities.CourseEnrollmentData", b =>
+                {
+                    b.Property<string>("CourseName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Grade")
+                        .HasColumnType("int");
+
+                    b.Property<long>("StudentId")
+                        .HasColumnType("bigint");
+
+                    b.ToTable("CourseEnrollmentData");
+                });
+
+            modelBuilder.Entity("EFCoreEncapsulate.Infrastructure.KeylessEntities.SportEnrollmentData", b =>
+                {
+                    b.Property<int>("Grade")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SportName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("StudentId")
+                        .HasColumnType("bigint");
+
+                    b.ToTable("SportEnrollmentData");
                 });
 
             modelBuilder.Entity("CourseTeacher", b =>
@@ -203,7 +237,8 @@ namespace EFCoreEncapsulate.Infrastructure.Migrations
                             b1.Property<string>("Value")
                                 .IsRequired()
                                 .HasMaxLength(150)
-                                .HasColumnType("nvarchar(150)");
+                                .HasColumnType("nvarchar(150)")
+                                .HasColumnName("Email");
 
                             b1.HasKey("StudentId");
 

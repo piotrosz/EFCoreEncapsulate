@@ -1,3 +1,23 @@
+###
+
+PUT http://localhost:5055/students/register HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Alice",
+    "email": "abc@fdkjlk.com"
+}
+
+###
+
+POST http://localhost:5055/students/edit HTTP/1.1
+content-type: application/json
+
+{
+    "id": 1,
+    "name": "Alice",
+    "email": "abc@fdkjlk.com"
+}
 
 ### Get all students
 
@@ -9,12 +29,7 @@ GET http://localhost:5055/students/1 HTTP/1.1
 
 ###
 
-GET http://localhost:5055/students/2 HTTP/1.1
-
-
-###
-
-POST http://localhost:5055/students HTTP/1.1
+POST http://localhost:5055/students/enroll HTTP/1.1
 content-type: application/json
 
 {

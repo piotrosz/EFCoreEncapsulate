@@ -15,6 +15,7 @@ builder.Services.AddSingleton<Messages>();
 
 // TODO: auto registration
 builder.Services.AddTransient<ICommandHandler<EditStudentPersonalInfoCommand>, EditStudentPersonalInfoCommandHandler>();
+builder.Services.AddTransient<ICommandHandler<RegisterStudentCommand>, RegisterStudentCommandHandler>();
 
 builder.Services.AddControllers();
 

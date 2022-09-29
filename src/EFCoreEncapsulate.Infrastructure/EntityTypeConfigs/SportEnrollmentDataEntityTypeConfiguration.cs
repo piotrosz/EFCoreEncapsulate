@@ -1,4 +1,4 @@
-using EFCoreEncapsulate.Data.KeylessEntities;
+using EFCoreEncapsulate.Infrastructure.KeylessEntities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

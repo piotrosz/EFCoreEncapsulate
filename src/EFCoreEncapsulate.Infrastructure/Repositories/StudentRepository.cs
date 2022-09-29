@@ -1,6 +1,6 @@
-﻿using EFCoreEncapsulate.Data.KeylessEntities;
-using EFCoreEncapsulate.DataContracts;
+﻿using EFCoreEncapsulate.DataContracts;
 using EFCoreEncapsulate.Domain;
+using EFCoreEncapsulate.Infrastructure.KeylessEntities;
 using Microsoft.EntityFrameworkCore;
 
 namespace EFCoreEncapsulate.Infrastructure.Repositories;

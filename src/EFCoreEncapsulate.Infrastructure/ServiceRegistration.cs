@@ -1,4 +1,5 @@
 using EFCoreEncapsulate.Domain;
+using EFCoreEncapsulate.Infrastructure.Configuration;
 using EFCoreEncapsulate.SharedKernel.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,11 +14,13 @@ public static class ServiceRegistration
     {
         services.AddSingleton<IModelConfiguration, SqlModelConfiguration>();
 
-        services.AddDbContext<SchoolContext>(options => {
-             options.UseSqlServer(connectionString, 
-             sqlOptions => {
-                sqlOptions.MigrationsAssembly(typeof(ServiceRegistration).Assembly.FullName);
-             });
+        Action<DbContextOptionsBuilder> optionsAction = options =>
+        {
+            options.UseSqlServer(connectionString,
+                sqlOptions =>
+                {
+                    sqlOptions.MigrationsAssembly(typeof(ServiceRegistration).Assembly.FullName);
+                });
 
             if (useConsoleLogger)
             {
@@ -29,9 +32,20 @@ public static class ServiceRegistration
             {
                 options
                     .UseLoggerFactory(CreateEmptyLoggerFactory());
-            }     
-        });
+            }
+        }; 
+            
+            
+        services.AddDbContext<SchoolContext>(optionsAction);
 
+        services.AddTransient<SchoolContext>();
+        services.AddTransient<DbContextOptions<SchoolContext>>(x =>  
+            new DbContextOptionsBuilder<SchoolContext>().UseSqlServer(connectionString,
+                sqlOptions =>
+                {
+                    sqlOptions.MigrationsAssembly(typeof(ServiceRegistration).Assembly.FullName);
+                }).Options);
+        
         return services;
     }
 

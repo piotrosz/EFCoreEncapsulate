@@ -13,13 +13,13 @@ namespace EFCoreEncapsulate.Api;
 public class StudentController : ControllerBase
 {
     private readonly SchoolContext _schoolContext;
-    private readonly StudentRepository _studentRepository;
+    private readonly IStudentRepository _studentRepository;
     private readonly CourseRepository _courseRepository;
 
     private readonly Messages _messages;
     
     public StudentController(
-        StudentRepository studentRepository,
+        IStudentRepository studentRepository,
         CourseRepository courseRepository, 
         SchoolContext schoolContext, 
         Messages messages)
@@ -52,6 +52,7 @@ public class StudentController : ControllerBase
     }
 
     [HttpPost]
+    [Route("enroll")]
     public async Task<ActionResult> EnrollInCourse(
         [FromBody, Required]EnrollInCourseDto enrollInCourse)
     {
@@ -85,30 +86,21 @@ public class StudentController : ControllerBase
 
     // TODO: name and email validation (FluentValidation)
     [HttpPost]
-    public async Task<ActionResult> EditPersonalInfo(long studentId, string name, string email)
+    [Route("edit")]
+    public async Task<ActionResult> EditPersonalInfo(
+        long studentId, 
+        [Required, FromBody] StudentPersonalInfoDto student)
     {
-        var result = await _messages.DispatchAsync(new EditStudentPersonalInfoCommand(studentId, name, email));
+        var result = await _messages.DispatchAsync(
+            new EditStudentPersonalInfoCommand(studentId, student.Name, student.Email));
         return result.IsSuccess ? Ok() : BadRequest(result.Error);
     }
 
-    // AutoMapper could be used
-    //private static StudentDto MapToDto(Student student)
-    //{
-    //    return new StudentDto
-    //    {
-    //        StudentId = student.Id,
-    //        Name = student.Name,
-    //        Email = student.Email,
-    //        CourseEnrollments = student.CourseEnrollments.Select(x => new CourseEnrollmentDto
-    //        {
-    //            Course = x.Course.Name,
-    //            Grade = x.Grade.ToString()
-    //        }).ToList(),
-    //        SportEnrollments = student.SportEnrollments.Select(x => new SportEnrollmentDto
-    //        {
-    //            Sport = x.Sport.Name,
-    //            Grade = x.Grade.ToString()
-    //        }).ToList()
-    //    };
-    //}
+    [HttpPut]
+    [Route("register")]
+    public async Task<IActionResult> Register([Required, FromBody] RegisterStudentDto student)
+    {
+        var result = await _messages.DispatchAsync(new RegisterStudentCommand(student.Name, student.Email));
+        return result.IsSuccess ? Ok() : BadRequest(result.Error);
+    }
 }
