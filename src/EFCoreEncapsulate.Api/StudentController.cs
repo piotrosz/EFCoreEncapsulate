@@ -86,9 +86,9 @@ public class StudentController : ControllerBase
 
     // TODO: name and email validation (FluentValidation)
     [HttpPost]
-    [Route("edit")]
+    [Route("{studentId}")]
     public async Task<ActionResult> EditPersonalInfo(
-        long studentId, 
+        long studentId,
         [Required, FromBody] StudentPersonalInfoDto student)
     {
         var result = await _messages.DispatchAsync(

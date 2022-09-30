@@ -1,5 +1,7 @@
 using EFCoreEncapsulate.Domain;
 using EFCoreEncapsulate.Infrastructure.Configuration;
+using EFCoreEncapsulate.Infrastructure.Repositories;
+using EFCoreEncapsulate.SharedKernel;
 using EFCoreEncapsulate.SharedKernel.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -34,18 +36,20 @@ public static class ServiceRegistration
                     .UseLoggerFactory(CreateEmptyLoggerFactory());
             }
         }; 
-            
-            
+        
         services.AddDbContext<SchoolContext>(optionsAction);
 
-        services.AddTransient<SchoolContext>();
-        services.AddTransient<DbContextOptions<SchoolContext>>(x =>  
-            new DbContextOptionsBuilder<SchoolContext>().UseSqlServer(connectionString,
-                sqlOptions =>
-                {
-                    sqlOptions.MigrationsAssembly(typeof(ServiceRegistration).Assembly.FullName);
-                }).Options);
-        
+        services.AddTransient<IStudentRepository, StudentRepository>();
+        services.AddTransient<CourseRepository>();
+
+        // TODO: Why I can't register it as singleton?
+        services.AddScoped<Messages>();
+
+        // TODO: auto registration
+        services.AddTransient<ICommandHandler<EditStudentPersonalInfoCommand>, EditStudentPersonalInfoCommandHandler>();
+        services.AddTransient<ICommandHandler<RegisterStudentCommand>, RegisterStudentCommandHandler>();
+
+
         return services;
     }
 
