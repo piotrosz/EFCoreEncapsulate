@@ -1,8 +1,12 @@
-It is all based Pluralsight courses:
+Experiments based on Pluralsight courses:
 
 https://app.pluralsight.com/library/courses/ef-core-6-encapsulating-usage
 
 https://app.pluralsight.com/library/courses/ef-core-6-best-practices/table-of-contents
+
+https://app.pluralsight.com/library/courses/cqrs-in-practice/table-of-contents
+
+Topics: ASP.NET Core, EF Core, CQRS, DDD
 
 If not using VS (i.e. text editor like VS Code):
 
