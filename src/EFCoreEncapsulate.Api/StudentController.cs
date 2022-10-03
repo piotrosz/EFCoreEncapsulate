@@ -3,7 +3,6 @@ using EFCoreEncapsulate.Api.Dtos;
 using EFCoreEncapsulate.DataContracts;
 using EFCoreEncapsulate.Domain;
 using EFCoreEncapsulate.Infrastructure;
-using EFCoreEncapsulate.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EFCoreEncapsulate.Api;
@@ -12,43 +11,28 @@ namespace EFCoreEncapsulate.Api;
 [Route("students")]
 public class StudentController : ControllerBase
 {
-    private readonly SchoolContext _schoolContext;
-    private readonly IStudentRepository _studentRepository;
-    private readonly CourseRepository _courseRepository;
-
     private readonly Messages _messages;
     
     public StudentController(
-        IStudentRepository studentRepository,
-        CourseRepository courseRepository, 
-        SchoolContext schoolContext, 
         Messages messages)
     {
-        _studentRepository = studentRepository;
-        _courseRepository = courseRepository;
-        _schoolContext = schoolContext;
         _messages = messages;
     }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<StudentDto>> Get(long id)
     {
-        StudentDto student = await _studentRepository.GetStudentDtoOrNullAsync(id);
-
-        if (student == null)
-        {
-            return NotFound("Student not found");
-        }
-
-        return Ok(student);
+        var result = await _messages.DispatchAsync(
+            new GetStudentQuery(id));
+        return result.IsSuccess ? Ok() : BadRequest(result.Error);
     }
 
-     [HttpGet]
+    [HttpGet]
     public async Task<ActionResult<IReadOnlyList<StudentDto>>> Get()
     {
-        var students = await _studentRepository.GetAllStudentsDtoAsync();
-
-        return Ok(students);
+        var result = await _messages.DispatchAsync(
+            new GetAllStudentsQuery());
+        return result.IsSuccess ? Ok() : BadRequest(result.Error);
     }
 
     [HttpPost]
@@ -56,32 +40,9 @@ public class StudentController : ControllerBase
     public async Task<ActionResult> EnrollInCourse(
         [FromBody, Required]EnrollInCourseDto enrollInCourse)
     {
-        Student student = await _studentRepository.GetByIdOrNullAsync(enrollInCourse.StudentId);
-
-        if (student == null)
-        {
-            return NotFound("Student not found");
-        }
-
-        Course course = await _courseRepository.GetByIdOrNullAsync(enrollInCourse.CourseId);
-
-        if (course == null)
-        {
-            return BadRequest("Course not found");
-        }
-
-        var result = student.EnrollInCourse(course, enrollInCourse.Grade);
-
-        if (result.IsFailure)
-        {
-            return BadRequest(result.Error);
-        }
-
-        // Not using custom unit of work to avoid shallow abstraction
-        // SchoolContext is already a unit of work
-        await _schoolContext.SaveChangesAsync();
-
-        return Ok();
+        var result = await _messages.DispatchAsync(
+            new EnrollInCourseCommand(enrollInCourse.StudentId, enrollInCourse.CourseId, enrollInCourse.Grade));
+        return result.IsSuccess ? Ok() : BadRequest(result.Error);
     }
 
     // TODO: name and email validation (FluentValidation)

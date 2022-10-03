@@ -1,3 +1,5 @@
+using CSharpFunctionalExtensions;
+using EFCoreEncapsulate.DataContracts;
 using EFCoreEncapsulate.Domain;
 using EFCoreEncapsulate.Infrastructure.Configuration;
 using EFCoreEncapsulate.Infrastructure.Repositories;
@@ -40,7 +42,7 @@ public static class ServiceRegistration
         services.AddDbContext<SchoolContext>(optionsAction);
 
         services.AddTransient<IStudentRepository, StudentRepository>();
-        services.AddTransient<CourseRepository>();
+        services.AddTransient<ICourseRepository, CourseRepository>();
 
         // TODO: Why I can't register it as singleton?
         services.AddScoped<Messages>();
@@ -48,6 +50,9 @@ public static class ServiceRegistration
         // TODO: auto registration
         services.AddTransient<ICommandHandler<EditStudentPersonalInfoCommand>, EditStudentPersonalInfoCommandHandler>();
         services.AddTransient<ICommandHandler<RegisterStudentCommand>, RegisterStudentCommandHandler>();
+        services.AddTransient<ICommandHandler<EnrollInCourseCommand>, EnrollInCourseCommandHandler>();
+        services.AddTransient<IQueryHandler<GetAllStudentsQuery, Result<IReadOnlyList<StudentDto>>>, GetAllStudentsQueryHandler>();
+        services.AddTransient<IQueryHandler<GetStudentQuery, Result<StudentDto>>, GetStudentQueryHandler>();
 
 
         return services;
