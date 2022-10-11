@@ -1,14 +1,27 @@
-###
+### Get all courses
+
+GET http://localhost:5055/courses HTTP/1.1
+
+### Register course
+
+PUT http://localhost:5055/courses/register HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Mathematics"
+}
+
+### Register student
 
 PUT http://localhost:5055/students/register HTTP/1.1
 content-type: application/json
 
 {
-    "name": "Alice",
-    "email": "abc@fdkjlk.com"
+    "name": "Bob",
+    "email": "bob@xdc.com"
 }
 
-###
+### Edit student data
 
 POST http://localhost:5055/students/1 HTTP/1.1
 content-type: application/json
@@ -22,11 +35,11 @@ content-type: application/json
 
 GET http://localhost:5055/students HTTP/1.1
 
-###
+### Get single student
 
 GET http://localhost:5055/students/1 HTTP/1.1
 
-###
+### Enroll to a course
 
 POST http://localhost:5055/students/enroll HTTP/1.1
 content-type: application/json

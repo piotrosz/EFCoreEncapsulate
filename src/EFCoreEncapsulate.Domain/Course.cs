@@ -11,6 +11,11 @@ public class Course : Entity
         Id = id;
         Name = name;
     }
+    
+    public Course(string name)
+    {
+        Name = name;
+    }
 
     public string Name { get; set; }
 

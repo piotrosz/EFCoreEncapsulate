@@ -4,16 +4,16 @@ using EFCoreEncapsulate.SharedKernel;
 
 namespace EFCoreEncapsulate.Domain;
 
-public class GetAllStudentsQueryHandler : IQueryHandler<GetAllStudentsQuery, Result<IReadOnlyList<StudentDto>>>
+public class GetStudentsQueryHandler : IQueryHandler<GetStudentsQuery, Result<IReadOnlyList<StudentDto>>>
 {
     private readonly IStudentRepository _studentRepository;
 
-    public GetAllStudentsQueryHandler(IStudentRepository studentRepository)
+    public GetStudentsQueryHandler(IStudentRepository studentRepository)
     {
         _studentRepository = studentRepository;
     }
 
-    public async Task<Result<IReadOnlyList<StudentDto>>> HandleAsync(GetAllStudentsQuery query)
+    public async Task<Result<IReadOnlyList<StudentDto>>> HandleAsync(GetStudentsQuery query)
     {
         var students = await _studentRepository.GetAllStudentsDtoAsync();
         return Result.Success(students);

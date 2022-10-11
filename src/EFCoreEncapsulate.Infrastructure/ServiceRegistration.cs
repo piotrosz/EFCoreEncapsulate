@@ -51,10 +51,12 @@ public static class ServiceRegistration
         services.AddTransient<ICommandHandler<EditStudentPersonalInfoCommand>, EditStudentPersonalInfoCommandHandler>();
         services.AddTransient<ICommandHandler<RegisterStudentCommand>, RegisterStudentCommandHandler>();
         services.AddTransient<ICommandHandler<EnrollInCourseCommand>, EnrollInCourseCommandHandler>();
-        services.AddTransient<IQueryHandler<GetAllStudentsQuery, Result<IReadOnlyList<StudentDto>>>, GetAllStudentsQueryHandler>();
+        services.AddTransient<IQueryHandler<GetStudentsQuery, Result<IReadOnlyList<StudentDto>>>, GetStudentsQueryHandler>();
         services.AddTransient<IQueryHandler<GetStudentQuery, Result<StudentDto>>, GetStudentQueryHandler>();
 
-
+        services.AddTransient<IQueryHandler<GetCoursesQuery, Result<IReadOnlyList<CourseDto>>>, GetCoursesQueryHandler>();
+        services.AddTransient<ICommandHandler<RegisterCourseCommand>, RegisterCourseCommandHandler>();
+        
         return services;
     }
 

@@ -5,7 +5,7 @@ using EFCoreEncapsulate.Domain;
 using EFCoreEncapsulate.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EFCoreEncapsulate.Api;
+namespace EFCoreEncapsulate.Api.Controllers;
 
 [ApiController]
 [Route("students")]
@@ -24,15 +24,15 @@ public class StudentController : ControllerBase
     {
         var result = await _messages.DispatchAsync(
             new GetStudentQuery(id));
-        return result.IsSuccess ? Ok() : BadRequest(result.Error);
+        return result.IsSuccess ? Ok(result.Value) : BadRequest(result.Error);
     }
 
     [HttpGet]
     public async Task<ActionResult<IReadOnlyList<StudentDto>>> Get()
     {
         var result = await _messages.DispatchAsync(
-            new GetAllStudentsQuery());
-        return result.IsSuccess ? Ok() : BadRequest(result.Error);
+            new GetStudentsQuery());
+        return result.IsSuccess ? Ok(result.Value) : BadRequest(result.Error);
     }
 
     [HttpPost]

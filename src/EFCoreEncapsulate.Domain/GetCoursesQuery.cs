@@ -4,6 +4,6 @@ using EFCoreEncapsulate.SharedKernel;
 
 namespace EFCoreEncapsulate.Domain;
 
-public class GetAllStudentsQuery : IQuery<Result<IReadOnlyList<StudentDto>>>
+public class GetCoursesQuery : IQuery<Result<IReadOnlyList<CourseDto>>>
 {
 }
