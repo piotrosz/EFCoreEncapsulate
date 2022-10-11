@@ -1,6 +1,7 @@
 using CSharpFunctionalExtensions;
 using EFCoreEncapsulate.DataContracts;
 using EFCoreEncapsulate.Domain;
+using EFCoreEncapsulate.Domain.Decorators;
 using EFCoreEncapsulate.Infrastructure.Configuration;
 using EFCoreEncapsulate.Infrastructure.Repositories;
 using EFCoreEncapsulate.SharedKernel;
@@ -48,7 +49,12 @@ public static class ServiceRegistration
         services.AddScoped<Messages>();
 
         // TODO: auto registration
-        services.AddTransient<ICommandHandler<EditStudentPersonalInfoCommand>, EditStudentPersonalInfoCommandHandler>();
+        services.AddTransient<ICommandHandler<EditStudentPersonalInfoCommand>>(provider => new AuditLoggingDecorator<EditStudentPersonalInfoCommand>(
+            new DatabaseRetryDecorator<EditStudentPersonalInfoCommand>(
+                new EditStudentPersonalInfoCommandHandler(
+                    provider.GetService<IStudentRepository>(),
+                    provider.GetService<SchoolContext>()))));
+        
         services.AddTransient<ICommandHandler<RegisterStudentCommand>, RegisterStudentCommandHandler>();
         services.AddTransient<ICommandHandler<EnrollInCourseCommand>, EnrollInCourseCommandHandler>();
         services.AddTransient<IQueryHandler<GetStudentsQuery, Result<IReadOnlyList<StudentDto>>>, GetStudentsQueryHandler>();
