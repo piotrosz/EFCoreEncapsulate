@@ -8,7 +8,7 @@ PUT http://localhost:5055/courses/register HTTP/1.1
 content-type: application/json
 
 {
-    "name": "Mathematics"
+    "name": "Physics"
 }
 
 ### Register student

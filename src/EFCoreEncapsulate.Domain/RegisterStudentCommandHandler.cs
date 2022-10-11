@@ -1,8 +1,11 @@
 ﻿using CSharpFunctionalExtensions;
+using EFCoreEncapsulate.Domain.Decorators;
 using EFCoreEncapsulate.SharedKernel;
 
 namespace EFCoreEncapsulate.Domain;
 
+[AuditLog]
+[DatabaseRetry]
 public class RegisterStudentCommandHandler : ICommandHandler<RegisterStudentCommand>
 {
     private readonly IStudentRepository _studentRepository;
