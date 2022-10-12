@@ -6,14 +6,11 @@ namespace EFCoreEncapsulate.Domain;
 public class RegisterCourseCommandHandler : ICommandHandler<RegisterCourseCommand>
 {
     private readonly ICourseRepository _courseRepository;
-    private readonly SchoolContext _schoolContext;
-    
+
     public RegisterCourseCommandHandler(
-        ICourseRepository courseRepository, 
-        SchoolContext schoolContext)
+        ICourseRepository courseRepository)
     {
         _courseRepository = courseRepository;
-        _schoolContext = schoolContext;
     }
 
     public async Task<Result> HandleAsync(RegisterCourseCommand command)
@@ -24,7 +21,7 @@ public class RegisterCourseCommandHandler : ICommandHandler<RegisterCourseComman
         }
         
         await _courseRepository.SaveAsync(new Course(command.Name));
-        await _schoolContext.SaveChangesAsync();
+        await _courseRepository.SaveChangesAsync();
 
         return Result.Success();
     }

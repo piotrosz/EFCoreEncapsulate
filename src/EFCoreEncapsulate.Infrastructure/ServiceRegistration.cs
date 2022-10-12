@@ -36,12 +36,12 @@ public static class ServiceRegistration
             }
         }; 
         
-        services.AddDbContext<SchoolContext>(optionsAction);
+        services.AddDbContext<SchoolContext>(optionsAction, ServiceLifetime.Scoped);
 
         services.AddTransient<IStudentRepository, StudentRepository>();
         services.AddTransient<ICourseRepository, CourseRepository>();
 
-        // TODO: Why I can't register it as singleton?
+        // TODO: Why can't I register it as singleton?
         services.AddScoped<Messages>();
 
         services.AddHandlers();

@@ -22,4 +22,9 @@ public abstract class Repository<T> where T : Entity
     {
         await SchoolContext.Set<T>().AddAsync(entity);
     }
+
+    public async Task<int> SaveChangesAsync()
+    {
+        return await SchoolContext.SaveChangesAsync();
+    }
 }

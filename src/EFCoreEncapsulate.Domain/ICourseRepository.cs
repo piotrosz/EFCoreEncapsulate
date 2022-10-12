@@ -8,4 +8,6 @@ public interface ICourseRepository
     Task<IReadOnlyList<Course>> GetAllAsync();
 
     Task<bool> CourseExists(string name);
+
+    Task<int> SaveChangesAsync();
 }

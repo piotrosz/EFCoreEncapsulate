@@ -1,6 +1,7 @@
 using EFCoreEncapsulate.Domain;
 using Microsoft.EntityFrameworkCore;
 
+[Obsolete]
 internal static class DataSeeder
 {
     public static void SeedTestData(this ModelBuilder modelBuilder)
